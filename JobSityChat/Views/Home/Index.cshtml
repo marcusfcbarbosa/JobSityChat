@@ -1,8 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+﻿<body>
+    <header>
+        <h1>Portal de Login</h1>
+    </header>
+    <main>
+        <form id="login_form" class="form_class" action="login/login-access.php" method="post">
+            <div class="form_div">
+                <label>Login:</label>
+                <input class="field_class" name="login_txt" type="text" placeholder="Insira o seu login" autofocus>
+                <label>Password:</label>
+                <input id="pass" class="field_class" name="password_txt" type="password" placeholder="Insira a sua senha">
+                <button class="submit_class" type="submit" form="login_form" onclick="return validarLogin() ">Log in</button>
+            </div>
+            <div class="info_div">
+                <p>Not a registered user yet?<a asp-controller="Home" asp-action="Register">Register!</a></p>
+            </div>
+        </form>
+    </main>
+    <footer>
+    </footer>
+</body>

@@ -1,0 +1,54 @@
+﻿@model JobSityChat.Models.UserRegister
+
+@{
+    ViewData["Title"] = "Registro de novo usuário";
+}
+
+<section class="section-conten padding-y container" style="min-height: 35vh">
+
+    <div class="card mx-auto" style="max-width: 380px; margin-top: 100px;">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Welcome</h4>
+            <form asp-controller="Home" asp-action="Register" method="post">
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cpf"></label>
+                    <input asp-for="Cpf" class="form-control" />
+                    <span asp-validation-for="Cpf" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input type="password" asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword"></label>
+                    <input type="password" asp-for="ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Register</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-center">Already have an account?<a asp-controller="Home" asp-action="Index"> Log in</a></div>
+    </div>
+
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
