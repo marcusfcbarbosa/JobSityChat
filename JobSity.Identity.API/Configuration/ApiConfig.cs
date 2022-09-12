@@ -23,7 +23,7 @@ namespace JobSity.Identity.API.Configuration
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            
             app.UseAuthConfiguration();
 
             app.UseEndpoints(endpoints =>

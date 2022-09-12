@@ -1,4 +1,5 @@
 ﻿using JobSityChat.Extensions;
+using JobSityChat.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,7 @@ namespace JobSityChat.Configuration
     {
         public static void AddMvcConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddControllers();
             services.AddControllersWithViews();
             services.Configure<AppSettings>(configuration);
         }
@@ -21,7 +23,7 @@ namespace JobSityChat.Configuration
             app.UseStatusCodePagesWithRedirects("/erro/{0}");
             app.UseHsts();
             #endregion
-
+            app.UseWebSockets();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -29,9 +31,9 @@ namespace JobSityChat.Configuration
 
             app.UseIdentityConfiguration();
             app.UseMiddleware<ExceptionMiddleware>();
-
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ChatHub>("/chatHub");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

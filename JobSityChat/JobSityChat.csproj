@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Hubs\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\JobSity.Core\JobSity.Core.csproj" />
   </ItemGroup>
 

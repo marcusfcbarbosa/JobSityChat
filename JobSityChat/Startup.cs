@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+
 namespace JobSityChat
 {
     public class Startup
@@ -28,8 +29,10 @@ namespace JobSityChat
 
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddIdentityConfiguration();
             services.AddMvcConfiguration(Configuration);
+            services.AddSignalR();
             services.RegisterServices();
         }
 

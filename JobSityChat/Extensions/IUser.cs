@@ -5,7 +5,7 @@ using System.Security.Claims;
 
 namespace JobSityChat.Extensions
 {
-    public interface IUser
+    public interface IAspNetUser
     {
         string Name { get; }
         Guid ObterUserId();
@@ -17,7 +17,7 @@ namespace JobSityChat.Extensions
         HttpContext ObterHttpContext();
     }
 
-    public class AspNetUser : IUser
+    public class AspNetUser : IAspNetUser
     {
         private readonly IHttpContextAccessor _accessor;
         public AspNetUser(IHttpContextAccessor accessor)

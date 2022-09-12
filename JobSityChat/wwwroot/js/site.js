@@ -1,3 +1,1 @@
-﻿const validarLogin = () => {
-    alert('Teste');
-}
+﻿
