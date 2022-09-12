@@ -2,6 +2,7 @@
 using JobSityChat.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -69,6 +70,7 @@ namespace JobSityChat.Controllers
 
         [HttpGet]
         [Route("chat")]
+        [Authorize]
         public async Task<IActionResult> Chat()
         {
             return View();
