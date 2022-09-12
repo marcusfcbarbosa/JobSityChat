@@ -1,9 +1,9 @@
-﻿using JobSity.Core.Communications;
+﻿
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace JobSityChat.Models
+namespace JobSity.Core.Communications
 {
     public class UserRegister
     {
@@ -37,7 +37,7 @@ namespace JobSityChat.Models
 
         [Required(ErrorMessage = "The field {0} is mandatory")]
         [StringLength(100, ErrorMessage = "Field {0} must be between {2} and {1} characters", MinimumLength = 6)]
-        public string Senha { get; set; }
+        public string Password { get; set; }
     }
 
     public class UserAnswersLogin
