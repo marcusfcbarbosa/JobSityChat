@@ -1,4 +1,5 @@
 ﻿using JobSity.Core.Communications;
+using JobSityChat.Extensions;
 using JobSityChat.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -18,10 +19,12 @@ namespace JobSityChat.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IAuthService _authenticationService;
-        public HomeController(ILogger<HomeController> logger, IAuthService authenticationService)
+        private readonly IAspNetUser _aspNetUser;
+        public HomeController(ILogger<HomeController> logger, IAuthService authenticationService, IAspNetUser aspNetUser)
         {
             _logger = logger;
             _authenticationService = authenticationService;
+            _aspNetUser = aspNetUser;
         }
 
         public IActionResult Index()
@@ -69,11 +72,19 @@ namespace JobSityChat.Controllers
         }
 
         [HttpGet]
+        [Route("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
         [Route("chat")]
         [Authorize]
         public async Task<IActionResult> Chat()
         {
-            return View();
+            return View(_aspNetUser);
         }
         private async Task LogIn(UserAnswersLogin userAnswersLogin)
         {

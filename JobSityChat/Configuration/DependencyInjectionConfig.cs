@@ -15,8 +15,7 @@ namespace JobSityChat.Configuration
             services.AddHttpClient<IAuthService, AuthenticationService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IAspNetUser, AspNetUser>();
-
-            
+            services.AddHttpClient<IStooqService, StooqService>();
         }
     }
 }

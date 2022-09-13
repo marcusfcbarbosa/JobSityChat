@@ -1,50 +1,66 @@
-﻿<div class="container col-6">
-    <div class="form-group">
-        <label for="usuario">Usuário</label>
-        <input type="text" id="usuario" class="form-control" />
+﻿@model JobSityChat.Extensions.IAspNetUser
+@if (Model.EstaAutenticado())
+{
+    <div class="container col-6">
+        <div class="form-group">
+            <label for="mensagem">Menssage</label>
+            <textarea class="form-control" id="mensagem" rows="2"></textarea>
+        </div>
+        <input type="button" class="btn btn-primary" id="send" value="Send" />
+        <a asp-controller="Home" asp-action="Logout" class="btn btn-danger"> Logout</a>
     </div>
-    <div class="form-group">
-        <label for="mensagem">Mensagem</label>
-        <textarea class="form-control" id="mensagem" rows="2"></textarea>
+    <div class="row">
+        <div class="col-12">
+            <hr />
+        </div>
     </div>
-    <input type="button" class="btn btn-primary" id="send" value="Enviar Mensagem" />
-</div>
-<div class="row">
-    <div class="col-12">
-        <hr />
+    <div class="container col-6">
+        <ul class="list-group" id="messagesList"></ul>
     </div>
-</div>
-<div class="container col-6">
-    <ul class="list-group" id="messagesList"></ul>
-</div>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-<script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+}
+else
+{
+    <div class="container col-6">
+        <small class="title text-muted">You must be logged</small>
+    </div>
+}
+
 <script type="text/javascript">
-   "use strict";
-var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+    "use strict";
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+    document.getElementById("send").disabled = true;
+    connection.on("ReceiveMessage", function(user, message) {
+        //I know this deal is wrong, but I couldn't think of 
+        // a way to fit RabbitMq into this scenario, it would need more time
+        if (message.indexOf("per share")!== -1) {
+            var currentUser = '@Model.ObterUserEmail()';
+            if (currentUser == user) {
+                var li = document.createElement("li");
+                document.getElementById("messagesList").appendChild(li);
+                li.textContent = `${user} says ${message}`;
+            }
+        } else {
+            var li = document.createElement("li");
+            document.getElementById("messagesList").appendChild(li);
+            li.textContent = `${user} says ${message}`;
+        }
+    });
 
-document.getElementById("send").disabled = true;
-connection.on("ReceiveMessage", function (user, message) {
-    var li = document.createElement("li");
-    document.getElementById("messagesList").appendChild(li);
-    li.textContent = `${user} says ${message}`;
-});
-
-connection.start().then(function () {
-    document.getElementById("send").disabled = false;
-}).catch(function (err) {
-    return console.error(err.toString());
-});
-
-document.getElementById("send").addEventListener("click", function (event) {
-    var user = $("#usuario").val();
-    var message =$("#mensagem").val();
-    connection.invoke("SendMessage", user, message).catch(function (err) {
+    connection.start().then(function() {
+        document.getElementById("send").disabled = false;
+    }).catch(function(err) {
         return console.error(err.toString());
     });
-    $("#usuario").val("");
-    $("#mensagem").val("");
-    event.preventDefault();
-});
-    
+
+    document.getElementById("send").addEventListener("click", function(event) {
+        var message = $("#mensagem").val();
+        connection.invoke("SendMessage", "", message).catch(function(err) {
+            return console.error(err.toString());
+        });
+        $("#mensagem").val("");
+        event.preventDefault();
+    });
+
 </script>
