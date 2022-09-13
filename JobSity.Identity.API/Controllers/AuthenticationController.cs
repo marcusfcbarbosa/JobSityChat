@@ -21,17 +21,14 @@ namespace JobSity.Identity.API.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AppSettings _appSettings;
-        //private readonly IMessageBus _bus;
         public AuthenticationController(SignInManager<IdentityUser> signInManager,
                              UserManager<IdentityUser> userManager,
                              IOptions<AppSettings> appSettings
-                             //,IMessageBus bus
                             )
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _appSettings = appSettings.Value;
-            //_bus = bus;
         }
         [HttpPost("authenticate")]
         public async Task<ActionResult> Login(UserLogin userLogin)
