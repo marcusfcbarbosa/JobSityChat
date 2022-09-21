@@ -8,12 +8,12 @@ namespace JobSityChat.Extensions
     public interface IAspNetUser
     {
         string Name { get; }
-        Guid ObterUserId();
-        string ObterUserEmail();
-        string ObterUserToken();
-        bool EstaAutenticado();
-        bool PossuiRole(string role);
-        IEnumerable<Claim> ObterClaims();
+        Guid GetUserId();
+        string GetUserEmail();
+        string GetUserToken();
+        bool IsAuthenticated();
+        bool HasRole(string role);
+        IEnumerable<Claim> GetClaims();
         HttpContext ObterHttpContext();
     }
 
@@ -27,32 +27,32 @@ namespace JobSityChat.Extensions
 
         public string Name => _accessor.HttpContext.User.Identity.Name;
 
-        public Guid ObterUserId()
+        public Guid GetUserId()
         {
-            return EstaAutenticado() ? Guid.Parse(_accessor.HttpContext.User.GetUserId()) : Guid.Empty;
+            return IsAuthenticated() ? Guid.Parse(_accessor.HttpContext.User.GetUserId()) : Guid.Empty;
         }
 
-        public string ObterUserEmail()
+        public string GetUserEmail()
         {
-            return EstaAutenticado() ? _accessor.HttpContext.User.GetUserEmail() : "";
+            return IsAuthenticated() ? _accessor.HttpContext.User.GetUserEmail() : "";
         }
 
-        public string ObterUserToken()
+        public string GetUserToken()
         {
-            return EstaAutenticado() ? _accessor.HttpContext.User.GetUserToken() : "";
+            return IsAuthenticated() ? _accessor.HttpContext.User.GetUserToken() : "";
         }
 
-        public bool EstaAutenticado()
+        public bool IsAuthenticated()
         {
             return _accessor.HttpContext.User.Identity.IsAuthenticated;
         }
 
-        public bool PossuiRole(string role)
+        public bool HasRole(string role)
         {
             return _accessor.HttpContext.User.IsInRole(role);
         }
 
-        public IEnumerable<Claim> ObterClaims()
+        public IEnumerable<Claim> GetClaims()
         {
             return _accessor.HttpContext.User.Claims;
         }

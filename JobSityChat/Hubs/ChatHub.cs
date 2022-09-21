@@ -19,11 +19,11 @@ namespace JobSityChat.Hubs
             if (message.Contains("stock"))
             {
                 string[] stockDetail = message.Split("=");
-                await Clients.All.SendAsync("ReceiveMessage", _aspNetUser.ObterUserEmail(), await _stooqService.GetStoqQuote(stockDetail[1]));
+                await Clients.All.SendAsync("ReceiveMessage", _aspNetUser.GetUserEmail(), await _stooqService.GetStoqQuote(stockDetail[1]));
             }
             else
             {
-                await Clients.All.SendAsync("ReceiveMessage", _aspNetUser.ObterUserEmail(), message);
+                await Clients.All.SendAsync("ReceiveMessage", _aspNetUser.GetUserEmail(), message);
             }
         }
     }

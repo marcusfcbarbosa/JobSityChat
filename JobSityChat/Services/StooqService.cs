@@ -21,7 +21,6 @@ namespace JobSityChat.Services
         {
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri(settings.Value.StoqUrl);
-
         }
         public async Task<string> GetStoqQuote(string stockCode)
         {

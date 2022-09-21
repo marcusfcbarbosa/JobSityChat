@@ -1,5 +1,5 @@
 ﻿@model JobSityChat.Extensions.IAspNetUser
-@if (Model.EstaAutenticado())
+@if (Model.IsAuthenticated())
 {
     <div class="container col-6">
         <div class="form-group">
@@ -35,7 +35,7 @@ else
         //I know this deal is wrong, but I couldn't think of 
         // a way to fit RabbitMq into this scenario, it would need more time
         if (message.indexOf("per share")!== -1) {
-            var currentUser = '@Model.ObterUserEmail()';
+            var currentUser = '@Model.GetUserEmail()';
             if (currentUser == user) {
                 var li = document.createElement("li");
                 document.getElementById("messagesList").appendChild(li);

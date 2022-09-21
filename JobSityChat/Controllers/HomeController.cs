@@ -40,7 +40,6 @@ namespace JobSityChat.Controllers
         [Route("login")]
         public async Task<IActionResult> Login(UserLogin userLogin, string returnUrl = null)
         {
-
             if (!ModelState.IsValid) return View(userLogin);
             var result = await _authenticationService.Login(userLogin);
             if (!ResponseHasErrors(result.ResponseResult))
